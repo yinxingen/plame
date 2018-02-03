@@ -1,0 +1,40 @@
+//.gameType-box{
+//  width: 100%;
+    .gameType{
+        width: 3.65;
+        height: .56rem;
+    //  background: red;
+        border-bottom: 1px solid #ddd;
+        margin-left: .1rem;
+        display: flex;
+        justify-content: space-between;
+        .gameType-left,.gameType-right{
+            height: 100%;
+            color: #555;
+            width: .88rem;
+            display: flex;
+            
+            align-items: center;
+        }
+        .gameType-left{
+           justify-content: flex-start;
+            .game-img{
+                >img{
+                    display: block;
+                    width: .2rem;
+                    height: .2rem;
+                    margin-right: .1rem;  
+                }
+            }
+        }
+        .gameType-right{
+            justify-content: flex-end;        
+            >p{
+                width: .3rem;
+                height: .3rem;
+                color: #aeaeae;
+                font-size: 30px;
+            }
+        }
+    }
+//}
