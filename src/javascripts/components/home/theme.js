@@ -1,27 +1,8 @@
 import React,{Component} from 'react'
 
-import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
-import homeData from '../../../redux/ActionCreators/homeDataActions'
-import store from '../../../redux/store'
-
 class Theme extends Component{
-	constructor(props){
-		super(props)
-		this.state = {
-			page:1,
-			isloadMore:false
-		}
-	}
-	componentWillMount(){
-//		console.log(this.state)
-		this.props.homeData.homeDataHandler(this.state.page)
-	}
-
 	render(){
-		let data = store.getState().homeData.homeDatas.themeList
-		
-//		console.log(data)
+		let {data} = this.props;
 		return(
 			<div>
 			{
@@ -75,17 +56,9 @@ class Theme extends Component{
 					</div>
 				)):''
 			}
-			{/* <div className='loadMore' onClick={()=>this.loadHandler()}>
-			点击加载更多
-			</div>	 */}
 			</div>
-			
 		)
 	}
 }
 
-export default connect(state=>state,(dispatch)=>{
-	return{
-		homeData:bindActionCreators(homeData,dispatch)
-	}
-})(Theme)
+export default Theme

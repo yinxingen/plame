@@ -1,34 +1,25 @@
 import React, { Component } from 'react'
-import 'swiper/dist/css/swiper.min.css'
 import Swiper from 'swiper'
-
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import homeData from '../../../redux/ActionCreators/homeDataActions'
-import store from '../../../redux/store'
 
 class Banner extends Component {
 
-    componentWillMount() {
-        //		console.log(this.props)
-        this.props.homeData.homeDataHandler()
-    }
-
-    componentDidUpdate() {
-        new Swiper('.banner', {
-            loop: true,
-            autoplay: {
-                disableOnInteraction: false,
-            },
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true
-            }
-        })
-    }
+    componentDidUpdate(){
+		
+		new Swiper('.banner',{
+			loop:true,
+			autoplay: {
+				disableOnInteraction: false,
+			},
+			pagination:{
+				el:'.swiper-pagination',
+				clickable :true
+			}
+		})
+	}
 
     render() {
-        let data = store.getState().homeData.homeDatas.bannerList
+		// console.log(this.props)
+		let {data} = this.props;
         return ( 
 			<div >
 				<div className = 'swiper-container banner' >
@@ -47,9 +38,4 @@ class Banner extends Component {
         )
     }
 }
-
-export default connect(state => state, (dispatch) => {
-    return {
-        homeData: bindActionCreators(homeData, dispatch)
-    }
-})(Banner)
+export default Banner

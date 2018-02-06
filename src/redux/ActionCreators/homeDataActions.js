@@ -1,37 +1,34 @@
 import axios from 'axios'
+import qs from 'qs'
 
 const homeDataActions = {
 
     homeDataHandler(page) {
         return (dispatch) => {
-
-            axios.post('/dola/app/mainpage/newgetmainpagelist', {
+            axios.post('/dola/app/mainpage/newgetmainpagelist', qs.stringify({
                     page
-                })
+                }))
                 .then(({ data }) => {
-                    //				console.log(data)
-                    data = data.data
-                        // console.log(data.themeList)
-                        // if (page > 1) {
-                        //     if (data.themeList.length) {
-                        //         return (dispatch) => {
-                        //             dispatch({
-                        //                 type: 'LOAD-MORE',
-                        //                 _themeList: data.themeList
-                        //             })
+                    if (page > 1) {
+                        if (data.data.themeList.length) {
+                            dispatch({
+                                type: 'LOAD-MORE',
+                                _themeList: data.data.themeList
+                            })
+                        }
+                    } else {
+                        dispatch({
+                            type: 'HOME_DATA',
+                            homeDatas: data.data
+                        })
+                    }
 
-                    //         }
-                    //     }
-                    // }
-
-                    dispatch({
-                        type: 'HOME_DATA',
-                        homeDatas: data
-                    })
+                })
+                .catch((err) => {
+                    console.log(err)
                 })
         }
     },
-
 }
 
 export default homeDataActions

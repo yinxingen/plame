@@ -5,12 +5,16 @@ const defaultState = {
 
 const billboardData = (state = defaultState, action) => {
     let new_state = Object.assign({}, state)
-
+    console.log(state)
     switch (action.type) {
 
         case 'BIILBOARD_DATA':
             new_state.billboardDatas = action.billboardDatas;
-            //			console.log(action)
+            break;
+        case 'LOADMORE':
+            console.log(action.gameList)
+            new_state.billboardDatas = state.billboardDatas.concat(action.gameList);
+
             break;
         default:
             break;

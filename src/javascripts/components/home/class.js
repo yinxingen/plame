@@ -1,20 +1,8 @@
 import React,{Component} from 'react'
 
-import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
-import homeData from '../../../redux/ActionCreators/homeDataActions'
-import store from '../../../redux/store'
-
 class Class extends Component{
-	
-	componentWillMount(){
-		this.props.homeData.homeDataHandler()
-	}
-	
 	render(){
-		let data = store.getState().homeData.homeDatas.classList
-		
-//		console.log(data)
+		let {data} = this.props;
 		return(
 			<div className="class-box">
 			{
@@ -29,9 +17,4 @@ class Class extends Component{
 		)
 	}
 }
-
-export default connect(state=>state,(dispatch)=>{
-	return{
-		homeData:bindActionCreators(homeData,dispatch)
-	}
-})(Class)
+export default Class

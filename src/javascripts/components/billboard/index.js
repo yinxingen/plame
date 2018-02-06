@@ -6,9 +6,7 @@ import Footer from '../footer'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import billboardData from '../../../redux/ActionCreators/biilboardDataActions'
-import store from '../../../redux/store'
-
+import biilboardDataActions from '../../../redux/ActionCreators/biilboardDataActions'
 
 class BillBoard extends Component{
 	constructor(props){
@@ -18,33 +16,34 @@ class BillBoard extends Component{
 				{title:'总榜',type:1,id:1},
 				{title:'新锐',type:2,id:2}
 			],
-			page:1,
-			type:1,
-			isShow:true,
-			top:0
+			isLoadMore:true
 		}
+		this.type=1,
+		this.page=1
 	}
 	componentWillMount(){
-		this.props.billboardData.homeDataHandler(this.state.type)
+		// console.log(this.props)
+		this.props.biilboardDataActions.biilboardHandler(this.type,this.page)
 	}
 	
+	loadMore(){
+		this.page++
+		this.props.biilboardDataActions.biilboardHandler(this.type,this.page)
+	}
+
 	changeShow(type){
-		
-		this.setState({
-			type
-//			gameList:[]
-		})
-		this.props.billboardData.homeDataHandler(type)
+		this.type=type
+		this.page=1
+		this.props.biilboardDataActions.biilboardHandler(type,this.page)
 		
 	}
 	
 	
 	render(){
+		// console.log(this)
 		let {pathname} = this.props.location
 		let {navs} = this.state
-		let data = store.getState().billboardData.billboardDatas.gameList
-//		console.log(data)
-		
+		let data = this.props.billboardData.billboardDatas
 		return(
 			<div className="main-box">
 				<Header text={"榜单"}/>
@@ -54,7 +53,7 @@ class BillBoard extends Component{
 							<p  
 							key={item.id} 
 							onClick={()=>this.changeShow(item.type)}
-							className={this.state.type===item.type?'active':''}>
+							className={this.type===item.type?'active':''}>
 								{item.title}
 							</p>
 						)):""
@@ -80,6 +79,11 @@ class BillBoard extends Component{
 					}	
 					
 				</div>
+				<div className='load-More' onClick={this.state.isLoadMore?()=>this.loadMore():alert('数据已经加载完毕了')}>
+					{
+						this.state.isLoadMore?'点击加载更多':''
+					}
+				</div>	
 				<Footer pathname={pathname}/>
 			</div>
 		)
@@ -88,6 +92,6 @@ class BillBoard extends Component{
 
 export default connect(state=>state,(dispatch)=>{
 	return{
-		billboardData:bindActionCreators(billboardData,dispatch)
+		biilboardDataActions:bindActionCreators(biilboardDataActions,dispatch)
 	}
 })(BillBoard)
